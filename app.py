@@ -39,7 +39,9 @@ def gpa_calculator():
         # 3: No changes
         second_gpa /= 5
         total_gpa = (first_gpa + second_gpa) / 2
-    return {"items": items, "total_gpa": total_gpa, "second_gpa": second_gpa, "first_gpa": first_gpa}
+
+    return {"items": items, "total_gpa": round(total_gpa, 3), "second_gpa": round(second_gpa, 3),
+            "first_gpa": round(first_gpa, 3)}
 
 
 @app.route('/')
