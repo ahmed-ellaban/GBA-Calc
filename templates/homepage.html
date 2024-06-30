@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects and Grades</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+function validateSelection(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selected = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+
+            if (selected !== 2) {
+                alert('You must select exactly two subjects from the last three.');
+                return false;
+            }
+
+            // Gather form data
+            const form = document.getElementById('gradesForm');
+            const formData = new FormData(form);
+
+            // Convert FormData to JSON
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = {value};
+            });
+
+            // Send the data using fetch
+            fetch('/gpa_calculator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Form submitted successfully');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        }
+    </script>
+</head>
+<body>
+<h2>Subjects and Grades</h2>
+<form id="gradesForm" onsubmit="validateSelection(event)">
+    <table>
+        <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Hours Number</th>
+            <th>Code</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>الجبر الخطي</td>
+            <td>3</td>
+            <td>BS-103</td>
+            <td><input type="number" max="100" min="1" name="grade1"></td>
+        </tr>
+        <tr>
+            <td>البرمجة الشيئية</td>
+            <td>3</td>
+            <td>CS-103</td>
+            <td><input type="number" max="100" min="1" name="grade2"></td>
+        </tr>
+        <tr>
+            <td>تطبيقات الاحتمالات والاحصاء في الحاسب</td>
+            <td>3</td>
+            <td>BS-104</td>
+            <td><input type="number" max="100" min="1" name="grade3"></td>
+        </tr>
+        <tr>
+            <td>تراكيب محددة</td>
+            <td>3</td>
+            <td>BS-102</td>
+            <td><input type="number" max="100" min="1" name="grade4"></td>
+        </tr>
+        <tr>
+            <td>مقدمة في نظم المعلومات</td>
+            <td>3</td>
+            <td>IS201</td>
+            <td><input type="number" max="100" min="1" name="grade5"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Choose two subjects from the following three:</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Subject</th>
+            <th>Hours Number</th>
+            <th>Code</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox" name="subject1" value="CS102"></td>
+            <td>البرمجة الهيكلية</td>
+            <td>3</td>
+            <td>CS102</td>
+            <td><input type="number" max="100" min="1" name="grade6"></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="subject2" value="UNV-102"></td>
+            <td>لغة انجليزية</td>
+            <td>2</td>
+            <td>UNV-102</td>
+            <td><input type="number" max="100" min="1" name="grade7"></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="subject3" value="UNV-103"></td>
+            <td>الكتابة العلمية والفنية</td>
+            <td>2</td>
+            <td>UNV 103</td>
+            <td><input type="number" max="100" min="1" name="grade8"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
