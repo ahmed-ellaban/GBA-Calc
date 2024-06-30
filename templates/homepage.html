@@ -19,14 +19,14 @@
         }
     </style>
     <script>
-function validateSelection(event) {
+        function validateSelection(event) {
             event.preventDefault(); // Prevent the form from submitting normally
 
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             const selected = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
 
-            if (selected !== 2) {
-                alert('You must select exactly two subjects from the last three.');
+            if (selected <= 1) {
+                alert('اختار مادة واحدة على الاقل فقط من الثلاثة المتاحة');
                 return false;
             }
 
@@ -37,7 +37,7 @@ function validateSelection(event) {
             // Convert FormData to JSON
             const data = {};
             formData.forEach((value, key) => {
-                data[key] = {value};
+                data[key] = value;
             });
 
             // Send the data using fetch
@@ -51,12 +51,41 @@ function validateSelection(event) {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                alert('Form submitted successfully');
+                displayResults(data);
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
+        }
 
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <h2>Results</h2>
+                <p>First Semiterm GPA: ${data.first_gpa}</p>
+                <p>Second Semiterm GPA: ${data.second_gpa}</p>
+                <p>Total GPA: ${data.total_gpa}</p>
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Mark</th>
+                            <th>GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.items.map(item => `
+                            <tr>
+                                <td>${item.code}</td>
+                                <td>${item.name}</td>
+                                <td>${item.mark}</td>
+                                <td>${item.gpa}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
         }
     </script>
 </head>
@@ -77,31 +106,31 @@ function validateSelection(event) {
             <td>الجبر الخطي</td>
             <td>3</td>
             <td>BS-103</td>
-            <td><input type="number" max="100" min="1" name="grade1"></td>
+            <td><input type="number" max="100" min="0" name="BS-103"></td>
         </tr>
         <tr>
             <td>البرمجة الشيئية</td>
             <td>3</td>
             <td>CS-103</td>
-            <td><input type="number" max="100" min="1" name="grade2"></td>
+            <td><input type="number" max="100" min="0" name="CS-103"></td>
         </tr>
         <tr>
             <td>تطبيقات الاحتمالات والاحصاء في الحاسب</td>
             <td>3</td>
             <td>BS-104</td>
-            <td><input type="number" max="100" min="1" name="grade3"></td>
+            <td><input type="number" max="100" min="0" name="BS-104"></td>
         </tr>
         <tr>
             <td>تراكيب محددة</td>
             <td>3</td>
             <td>BS-102</td>
-            <td><input type="number" max="100" min="1" name="grade4"></td>
+            <td><input type="number" max="100" min="0" name="BS-102"></td>
         </tr>
         <tr>
             <td>مقدمة في نظم المعلومات</td>
             <td>3</td>
             <td>IS201</td>
-            <td><input type="number" max="100" min="1" name="grade5"></td>
+            <td><input type="number" max="100" min="0" name="IS201"></td>
         </tr>
         </tbody>
     </table>
@@ -124,26 +153,34 @@ function validateSelection(event) {
             <td>البرمجة الهيكلية</td>
             <td>3</td>
             <td>CS102</td>
-            <td><input type="number" max="100" min="1" name="grade6"></td>
+
+            <td><input type="number" max="100" min="0" name="optional-CS102"></td>
         </tr>
         <tr>
             <td><input type="checkbox" name="subject2" value="UNV-102"></td>
             <td>لغة انجليزية</td>
             <td>2</td>
             <td>UNV-102</td>
-            <td><input type="number" max="100" min="1" name="grade7"></td>
+            <td><input type="number" max="100" min="0" name="optional-UNV-102"></td>
         </tr>
         <tr>
             <td><input type="checkbox" name="subject3" value="UNV-103"></td>
             <td>الكتابة العلمية والفنية</td>
             <td>2</td>
             <td>UNV 103</td>
-            <td><input type="number" max="100" min="1" name="grade8"></td>
+            <td><input type="number" max="100" min="0" name="optional-UNV-103"></td>
         </tr>
         </tbody>
     </table>
-    <br>
+
+    <h2>First Semiterm GPA</h2>
+    <input type="number" max="4" min="0" step="0.01" name="first_semiterm_gpa" required>
+
+    <br><br>
     <input type="submit" value="Submit">
 </form>
+
+<div id="results"></div>
+
 </body>
 </html>

@@ -2,20 +2,44 @@ from flask import Flask, render_template
 from flask import request
 
 app = Flask(__name__)
+subjects = {"BS-103": "الجبر الخطي", "CS-103": "البرمجة الشيئية", "BS-102": "تراكيب محددة",
+            "BS-104": "تطبيقات الاحتمالات والاحصاء في الحاسب", "IS201": "مقدمة في نظم المعلومات",
+            "CS102": "البرمجة الهيكلية", "UNV-102": "لغة انجليزية", "UNV-103": "الكتابة العلمية والفنية"}
 
 
 @app.route('/gpa_calculator', methods=['POST'])
 def gpa_calculator():
     data = request.get_json()
     items = []
-    gpa = 0
-    for i in range(1, 7):
-        mark = int(request.args.get(f"grade{i}"))
-        grade = gpa_counter(mark)
-        items.append({"grade": grade})
-        gpa += grade
-    gpa /= 7
-    return gpa
+    second_gpa = 0
+    first_gpa = float(data['first_semiterm_gpa'])
+    for key, val in list(data.items())[:5]:
+        mark = float(val)
+        gpa = gpa_counter(mark)
+        items.append({"name": subjects[key], "code": key, "mark": mark, "gpa": gpa})
+        second_gpa += gpa
+
+    if data.get('subject1') and not (data.get('subject2') or data.get('subject3')):
+        # Replaced programming with two courses (Writing and English)
+        mark = float(data['optional-CS102'])
+        gpa = gpa_counter(mark)
+        items.append({"name": subjects['CS102'], "code": 'CS102', "mark": mark, "gpa": gpa})
+        second_gpa += gpa
+        second_gpa /= 6
+        total_gpa = ((first_gpa * 5 * 3) + (second_gpa * 6 * 3)) / 30
+    elif data.get('subject1') and (data.get('subject2') or data.get('subject3')):
+        # 2: Replaced programming with one course (3 hours)
+        mark = float(data['optional-CS102'])
+        gpa = gpa_counter(mark)
+        items.append({"name": subjects['CS102'], "code": 'CS102', "mark": mark, "gpa": gpa})
+        second_gpa += gpa
+        second_gpa /= 6
+        total_gpa = ((first_gpa * 5 * 3) + (second_gpa * 6 * 3)) / 27
+    else:
+        # 3: No changes
+        second_gpa /= 5
+        total_gpa = (first_gpa + second_gpa) / 2
+    return {"items": items, "total_gpa": total_gpa, "second_gpa": second_gpa, "first_gpa": first_gpa}
 
 
 @app.route('/')
@@ -50,16 +74,6 @@ def gpa_counter(mark):
         return 1
     else:
         return 0
-
-
-def total_gpa_calculator(gpa_1, gpa_2, option):
-    if option == 1:
-        total_gpa = ((gpa_1 * 5 * 3) + (gpa_2 * 6 * 3)) / 30
-    elif option == 2:
-        total_gpa = ((gpa_1 * 5 * 3) + (gpa_2 * 6 * 3)) / 27
-    else:
-        total_gpa = (gpa_1 + gpa_2) / 2
-    return total_gpa
 
 
 if __name__ == '__main__':
