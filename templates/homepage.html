@@ -25,7 +25,7 @@
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
@@ -65,7 +65,37 @@
         }
 
         .gpa-input {
-            width: 50%;
+            width: auto;
+            display: inline-block;
+        }
+
+        .result-table {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .result-table th, .result-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+
+        .result-table th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .result-container p {
+            margin: 5px 0;
+            font-size: 1.1em;
         }
 
         @media (max-width: 768px) {
@@ -85,6 +115,12 @@
 
             .gpa-input {
                 width: 100%;
+                display: block;
+                margin-top: 10px;
+            }
+
+            .result-container p {
+                font-size: 1em;
             }
         }
     </style>
@@ -120,6 +156,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    alert('Results are ready, scroll down to view them! :)')
                     console.log('Success:', data);
                     displayResults(data);
                 })
@@ -131,6 +168,7 @@
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
+                <div class = "result-container">
                 <h2>Results</h2>
                 <p>First Semi term GPA: ${data.first_gpa}</p>
                 <p>Second Semi term GPA: ${data.second_gpa}</p>
@@ -155,6 +193,7 @@
                         `).join('')}
                     </tbody>
                 </table>
+                </div>
             `;
         }
     </script>
@@ -244,7 +283,7 @@
     </table>
 
     <h2>First Semi term GPA:</h2>
-    <input type="number" max="4" min="0" step="0.01" name="first_semiterm_gpa" required>
+    <input type="number" max="4" min="0" step="0.01" name="first_semiterm_gpa" class="gpa-input" required>
 
     <br><br>
     <input type="submit" value="Submit">

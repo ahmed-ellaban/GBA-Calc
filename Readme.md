@@ -1,26 +1,38 @@
-## 5 whys technique:
+## 5 Whys Technique: Understanding the GPA Calculation Issue
 
-1- what is the problem?
-the problem is the complexity of getting gpa specaily if you fail with some subjects or under 2 gpa and the university
-takes much time to tells the gpa
-why is it a problem?
-it takes much time to count it manually and it is hard to know if you are under 2 gpa or not
-why does it happen?
-because the gpa is calculated by the sum of the grades and the sum of the credit hours
-2-who does it impact?
-all students
+### 1. What is the problem?
+The problem is the complexity of calculating GPA, especially if a student fails some subjects or has a GPA under 2. The university takes a considerable amount of time to provide GPA results.
 
-3-what is the root cause?
-the complexity of the calculation
+### Why is it a problem?
+Calculating GPA manually is time-consuming and it is challenging to determine immediately if one's GPA is under 2.
 
-4-what is the solution?
-to create a program that calculates the gpa automatically, and the student can know his gpa at any time
+### Why does it happen?
+GPA is calculated based on the sum of the grades weighted by the credit hours of the courses. The manual process and complexity of calculations lead to delays.
 
-5-how to implement the solution?
-will create a simple website that takes the grades and the credit hours and calculates the gpa automatically and return
-a table with all subjects and the gpa of them and the total gpa
+### 2. Who does it impact?
+This issue impacts all students.
+
+### 3. What is the root cause?
+The root cause is the inherent complexity of the GPA calculation process, which involves multiple variables and conditions that are cumbersome to manage manually.
+
+### 4. What is the solution?
+The solution is to develop an automated program that calculates the GPA instantly. This allows students to access their GPA at any time without waiting for manual calculations.
+
+### 5. How to implement the solution?
+A simple website will be created where students can enter their grades and credit hours. The website will then automatically calculate the GPA for each subject and the total GPA, displaying the results in a comprehensible table format.
+
+### 6. Mind Map Outline:
+1. User Interface:
+   - Input fields for grades and credit hours.
+   - Submit button to process the GPA calculation.
+
+2. Back-end Logic:
+   - Functions to calculate GPA based on user input.
+   - Logic to handle edge cases (e.g., failed subjects, GPA below 2).
+
+3. Output:
+   - Display a table listing all subjects, their respective GPAs, and the total GPA.
 
 
-6- mind map:
-1- user will enter its 
-
+#### Created by [Ahmed Ellaban](https://upwork.com/freelancers/ahmedellban)
+**وَسَلَامٌ عَلَى الْمُرْسَلِينَ وَالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ** 
