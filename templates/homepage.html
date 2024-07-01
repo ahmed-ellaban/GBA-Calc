@@ -8,11 +8,13 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background: #f8f8f8;
         }
 
         h2 {
             color: #333;
-            font-size: 1.5em;
+            font-size: 1.8em;
+            margin-bottom: 20px;
         }
 
         table {
@@ -20,11 +22,13 @@
             border-collapse: collapse;
             margin-bottom: 20px;
             font-size: 1em;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
         }
 
@@ -34,8 +38,9 @@
         }
 
         input[type="number"], input[type="text"] {
-            width: 100%;
-            padding: 8px;
+            width: 95%;
+            padding: 10px;
+            margin: 5px 0;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -43,84 +48,57 @@
         }
 
         input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: #0056b3;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .result-table {
-            margin-top: 20px;
-        }
-
-        .result-table th {
-            background-color: #f4f4f4;
+            background-color: #004494;
         }
 
         .gpa-input {
-            width: auto;
-            display: inline-block;
+            width: 25%;
+            display: inline-block; /* Keep inline with label */
+            margin-left: 10px; /* Space between label and input */
         }
 
-        .result-table {
-            margin-top: 20px;
-            border: 1px solid #ddd;
-        }
-
-        .result-table th, .result-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: right;
-        }
-
-        .result-table th {
-            background-color: #f9f9f9;
-            font-weight: bold;
-        }
-
-        .result-container {
-            margin-top: 20px;
+        .form-section {
+            background: white;
             padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
-        .result-container p {
-            margin: 5px 0;
+        .results-container {
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .results-container h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .results-container p {
             font-size: 1.1em;
+            margin: 5px 0;
         }
 
         @media (max-width: 768px) {
-            h2 {
-                font-size: 1.2em;
-            }
-
-            th, td {
-                padding: 6px;
-                font-size: 0.9em;
-            }
-
-            input[type="number"], input[type="text"], .gpa-input {
-                font-size: 0.9em;
-                padding: 6px;
-            }
-
-            .gpa-input {
+            .gpa-input, input[type="number"], input[type="text"] {
                 width: 100%;
-                display: block;
-                margin-top: 10px;
-            }
-
-            .result-container p {
-                font-size: 1em;
+                display: block; /* Full width on mobile */
             }
         }
     </style>
@@ -201,95 +179,95 @@
 <body>
 <h2>Subjects and Grades</h2>
 <form id="gradesForm" onsubmit="validateSelection(event)">
-    <table>
-        <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Hours Number</th>
-            <th>Code</th>
-            <th>Grade</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>الجبر الخطي</td>
-            <td>3</td>
-            <td>BS-103</td>
-            <td><input type="number" max="100" min="0" name="BS-103"></td>
-        </tr>
-        <tr>
-            <td>البرمجة الشيئية</td>
-            <td>3</td>
-            <td>CS-103</td>
-            <td><input type="number" max="100" min="0" name="CS-103"></td>
-        </tr>
-        <tr>
-            <td>تطبيقات الاحتمالات والاحصاء في الحاسب</td>
-            <td>3</td>
-            <td>BS-104</td>
-            <td><input type="number" max="100" min="0" name="BS-104"></td>
-        </tr>
-        <tr>
-            <td>تراكيب محددة</td>
-            <td>3</td>
-            <td>BS-102</td>
-            <td><input type="number" max="100" min="0" name="BS-102"></td>
-        </tr>
-        <tr>
-            <td>مقدمة في نظم المعلومات</td>
-            <td>3</td>
-            <td>IS201</td>
-            <td><input type="number" max="100" min="0" name="IS201"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h2>Choose two subjects from the following three:</h2>
-
-    <table>
-        <thead>
-        <tr>
-            <th>Select</th>
-            <th>Subject</th>
-            <th>Hours Number</th>
-            <th>Code</th>
-            <th>Grade</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><input type="checkbox" name="subject1" value="CS102"></td>
-            <td>البرمجة الهيكلية</td>
-            <td>3</td>
-            <td>CS102</td>
-
-            <td><input type="number" max="100" min="0" name="optional-CS102"></td>
-        </tr>
-        <tr>
-            <td><input type="checkbox" name="subject2" value="UNV-102"></td>
-            <td>لغة انجليزية</td>
-            <td>2</td>
-            <td>UNV-102</td>
-            <td><input type="number" max="100" min="0" name="optional-UNV-102"></td>
-        </tr>
-        <tr>
-            <td><input type="checkbox" name="subject3" value="UNV-103"></td>
-            <td>الكتابة العلمية والفنية</td>
-            <td>2</td>
-            <td>UNV 103</td>
-            <td><input type="number" max="100" min="0" name="optional-UNV-103"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h2>First Semi term GPA:</h2>
-    <input type="number" max="4" min="0" step="0.01" name="first_semiterm_gpa" class="gpa-input" required>
-
-    <br><br>
-    <input type="submit" value="Submit">
+    <div class="form-section">
+        <table>
+            <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Hours Number</th>
+                <th>Code</th>
+                <th>Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>الجبر الخطي</td>
+                <td>3</td>
+                <td>BS-103</td>
+                <td><input type="number" max="100" min="0" name="BS-103"></td>
+            </tr>
+            <tr>
+                <td>البرمجة الشيئية</td>
+                <td>3</td>
+                <td>CS-103</td>
+                <td><input type="number" max="100" min="0" name="CS-103"></td>
+            </tr>
+            <tr>
+                <td>تطبيقات الاحتمالات والاحصاء في الحاسب</td>
+                <td>3</td>
+                <td>BS-104</td>
+                <td><input type="number" max="100" min="0" name="BS-104"></td>
+            </tr>
+            <tr>
+                <td>تراكيب محددة</td>
+                <td>3</td>
+                <td>BS-102</td>
+                <td><input type="number" max="100" min="0" name="BS-102"></td>
+            </tr>
+            <tr>
+                <td>مقدمة في نظم المعلومات</td>
+                <td>3</td>
+                <td>IS201</td>
+                <td><input type="number" max="100" min="0" name="IS201"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-section">
+        <h2>Choose two subjects from the following three:</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Subject</th>
+                <th>Hours Number</th>
+                <th>Code</th>
+                <th>Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox" name="subject1" value="CS102"></td>
+                <td>البرمجة الهيكلية</td>
+                <td>3</td>
+                <td>CS102</td>
+                <td><input type="number" max="100" min="0" name="optional-CS102"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="subject2" value="UNV-102"></td>
+                <td>لغة انجليزية</td>
+                <td>2</td>
+                <td>UNV-102</td>
+                <td><input type="number" max="100" min="0" name="optional-UNV-102"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="subject3" value="UNV-103"></td>
+                <td>الكتابة العلمية والفنية</td>
+                <td>2</td>
+                <td>UNV 103</td>
+                <td><input type="number" max="100" min="0" name="optional-UNV-103"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-section">
+        <label for="first_semiterm_gpa">First Semi term GPA:</label>
+        <input type="number" id="first_semiterm_gpa" max="4" min="0" step="0.01" name="first_semiterm_gpa"
+               class="gpa-input" required>
+        <input type="submit" value="Submit">
+    </div>
 </form>
 
 <div id="results"></div>
-
 </body>
 </html>
