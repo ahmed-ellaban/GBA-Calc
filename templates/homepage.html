@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="static/favicon-32x32.png">
     <title>Subjects and Grades</title>
     <style>
         body {
@@ -23,7 +24,8 @@
             margin-bottom: 20px;
             font-size: 1em;
             background: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto; /* Allow horizontal scrolling */
         }
 
         th, td {
@@ -95,10 +97,18 @@
             margin: 5px 0;
         }
 
-        @media (max-width: 768px) {
-            .gpa-input, input[type="number"], input[type="text"] {
-                width: 100%;
-                display: block; /* Full width on mobile */
+        @media (max-width: 600px) {
+            th, td {
+                padding: 10px 5px; /* Smaller padding for smaller screens */
+            }
+
+            .form-section {
+                padding: 10px; /* Smaller section padding */
+            }
+
+            input[type="number"], input[type="text"] {
+                width: 100%; /* Full width inputs */
+                box-sizing: border-box; /* Adjust box sizing */
             }
         }
     </style>
